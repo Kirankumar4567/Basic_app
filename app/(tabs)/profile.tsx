@@ -1,74 +1,207 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, ImageBackground, StyleSheet } from 'react-native';
+import {
+  Avatar,
+  Button,
+  Card,
+  Chip,
+  Divider,
+  IconButton,
+  List,
+  Surface,
+  Text,
+  useTheme,
+  ProgressBar,
+} from 'react-native-paper';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+export const MainScreen = () => {
+  const theme = useTheme();
+  const [following, setFollowing] = useState(false);
 
-export default function HomeScreen() {
+  const skills = [
+    { name: 'React Native', level: 0.9 },
+    { name: 'JavaScript', level: 0.85 },
+    { name: 'TypeScript', level: 0.8 },
+    { name: 'Node.js', level: 0.75 },
+  ];
+
+  const achievements = [
+    { icon: 'trophy', title: 'Top Developer 2023', description: 'Ranked #1 in community' },
+    { icon: 'star', title: '100 Projects', description: 'Completed milestone' },
+    { icon: 'heart', title: '1K+ Followers', description: 'Growing community' },
+  ];
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ScrollView style={styles.scrollView}>
+      <ImageBackground
+        source={{ uri: 'https://picsum.photos/800/400' }}
+        style={styles.imageBackground}
+      >
+        <View style={styles.imageOverlay}>
+          <Text variant="headlineMedium" style={styles.nameText}>
+            John Doe
+          </Text>
+          <Text variant="titleMedium" style={styles.roleText}>
+            Software Engineer
+          </Text>
+        </View>
+      </ImageBackground>
+
+      <Surface style={styles.surface}>
+        <View style={styles.avatarContainer}>
+          <Avatar.Image
+            size={120}
+            source={{ uri: 'https://randomuser.me/api/portraits/men/75.jpg' }}
+            style={styles.avatar}
+          />
+          <View style={styles.actionButtonsContainer}>
+            <Button
+              mode={following ? "outlined" : "contained"}
+              onPress={() => setFollowing(!following)}
+            >
+              {following ? 'Following' : 'Follow'}
+            </Button>
+            <IconButton
+              icon="message"
+              mode="contained-tonal"
+              onPress={() => {}}
+            />
+            <IconButton
+              icon="share-variant"
+              mode="contained-tonal"
+              onPress={() => {}}
+            />
+          </View>
+        </View>
+
+        <Divider />
+
+        <View style={styles.sectionContainer}>
+          <Text variant="titleMedium" style={styles.sectionTitle}>About</Text>
+          <Text variant="bodyMedium" style={styles.sectionText}>
+            Passionate software engineer with 2+ years of experience in building scalable applications.
+            Love to contribute to open source and mentor upcoming developers.
+          </Text>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <Text variant="titleMedium" style={styles.sectionTitle}>Skills</Text>
+          <View style={styles.skillsContainer}>
+            {skills.map((skill, index) => (
+              <View key={index}>
+                <View style={styles.skillRow}>
+                  <Text variant="bodyMedium">{skill.name}</Text>
+                  <Text variant="bodyMedium">{Math.round(skill.level * 100)}%</Text>
+                </View>
+                <ProgressBar
+                  progress={skill.level}
+                  style={styles.progressBar}
+                />
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <Text variant="titleMedium" style={styles.sectionTitle}>Achievements</Text>
+          {achievements.map((achievement, index) => (
+            <List.Item
+              key={index}
+              title={achievement.title}
+              description={achievement.description}
+              left={props => <List.Icon {...props} icon={achievement.icon} />}
+              style={styles.listItem}
+            />
+          ))}
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <Text variant="titleMedium" style={styles.sectionTitle}>Expertise</Text>
+          <View style={styles.chipContainer}>
+            <Chip icon="code-tags">Frontend</Chip>
+            <Chip icon="database">Backend</Chip>
+            <Chip icon="cloud">Cloud</Chip>
+            <Chip icon="security">Security</Chip>
+            <Chip icon="test-tube">Testing</Chip>
+            <Chip icon="chart-line">Performance</Chip>
+          </View>
+        </View>
+      </Surface>
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  scrollView: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  imageBackground: {
+    height: 200,
+  },
+  imageOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'flex-end',
+    padding: 16,
+  },
+  nameText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  roleText: {
+    color: 'white',
+  },
+  surface: {
+    margin: 16,
+    borderRadius: 12,
+    elevation: 4,
+    backgroundColor: 'white',
+  },
+  avatarContainer: {
+    padding: 16,
     alignItems: 'center',
+  },
+  avatar: {
+    marginTop: -76,
+    borderWidth: 4,
+    borderColor: 'white',
+  },
+  actionButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 16,
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
+  sectionContainer: {
+    padding: 16,
+  },
+  sectionTitle: {
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  sectionText: {
+    color: '#666',
+  },
+  skillsContainer: {
+    gap: 12,
+  },
+  skillRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  progressBar: {
+    height: 6,
+    borderRadius: 3,
+    marginTop: 4,
+  },
+  listItem: {
+    paddingVertical: 4,
+  },
+  chipContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
   },
 });
+
+export default MainScreen;

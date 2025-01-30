@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Image } from 'react-native';  // Import Image for the left-side icon
-import { usePathname } from 'expo-router'; // Import usePathname to check current route
+import { Image, TouchableOpacity } from 'react-native';  // Import TouchableOpacity for click functionality
+import { usePathname, Link } from 'expo-router'; // Import Link for navigation
 
 export default function TabLayout() {
   const pathname = usePathname();  // Get current pathname
@@ -22,10 +22,12 @@ export default function TabLayout() {
         headerTitleAlign: 'center', // Center align the header title
         headerLeft: () => (
           !(isProfessionalCareersPage || is2DAnimationPage) && (  // Hide left icon for both pages
-            <Image
-              source={{ uri: 'https://randomuser.me/api/portraits/men/75.jpg' }}  // Link to the image
-              style={{ width: 44, height: 44, borderRadius: 15, marginLeft: 10 }}  // Adjust size and border radius
-            />
+            <Link href="/profile">  {/* Wrap Image in Link to navigate to profile */}
+              <Image
+                source={{ uri: 'https://randomuser.me/api/portraits/men/75.jpg' }}  // Link to the image
+                style={{ width: 44, height: 44, borderRadius: 15, marginLeft: 10 }}  // Adjust size and border radius
+              />
+            </Link>
           )
         ),
         headerRight: () => (
@@ -49,7 +51,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="Explore"
         options={{
-          title: 'Explore',
+          title: 'Explore',  // Use a string for the title
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'compass' : 'compass-outline'} color={color} size={24} />
           ),
@@ -58,7 +60,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="videos"
         options={{
-          title: 'Videos',
+          title: 'Videos',  // Use a string for the title
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'videocam' : 'videocam-outline'} color={color} size={24} />
           ),
@@ -67,7 +69,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Home',  // Use a string for the title
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
           ),
@@ -76,7 +78,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="school"
         options={{
-          title: 'School',
+          title: 'School',  // Use a string for the title
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'school' : 'school-outline'} color={color} size={24} />
           ),
@@ -85,7 +87,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: 'Profile',  // Use a string for the title
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'person' : 'person-outline'} color={color} size={24} />
           ),

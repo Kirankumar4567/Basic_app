@@ -33,7 +33,7 @@ const SearchBarComponent = () => {
 
           {/* Military Careers */}
           <ImageBackground
-            source={{ uri: 'https://i.ibb.co/v1CgMxJ/career.jpg' }}
+            source={{ uri: 'https://i.ibb.co/fY4chY9g/mitlitary-careers.jpg' }}
             style={styles.imageContainer}
             resizeMode="cover"
           >
